@@ -1,0 +1,52 @@
+{
+    "id": 22,
+    "categoryId": "roasted",
+    "image": "/recipes/bbq_salmon.jpg",
+    "name": "BBQ三文鱼 + 芒果莎莎酱",
+    "description": "Brown sugar and paprika salmon roasted hot and fast, served with fresh mango-avocado-lime salsa.",
+    "difficulty": "Easy",
+    "time": "~45 min",
+    "tags": [
+        "Salmon",
+        "American"
+    ],
+    "makes": "1",
+    "ingredients": [
+        {
+            "group": "三文鱼",
+            "items": [
+                "¼ lb 三文鱼",
+                "¼ tbsp 油",
+                "¼ tbsp 红糖",
+                "¼ tsp paprika",
+                "¼ tsp onion powder",
+                "⅛ tsp garlic powder",
+                "⅛ tsp 辣椒面",
+                "1/16 tsp 盐"
+            ]
+        },
+        {
+            "group": "芒果莎莎酱",
+            "items": [
+                "1个 芒果",
+                "½个 牛油果",
+                "⅛ cup red onion",
+                "⅛ cup cilantro",
+                "¼ cup jalapeño",
+                "½ tsp 蜂蜜",
+                "1 tbsp lime juice + ½ tsp lime zest",
+                "盐"
+            ]
+        }
+    ],
+    "steps": [
+        "芒果莎莎：所有食材切小块，拌在一起，加蜂蜜、lime juice和盐调味。",
+        "三文鱼用厨房纸吸干水分，放回冰箱备用。",
+        "烤箱预热至475°F。",
+        "将油和所有香料均匀混合，抹在三文鱼肉面上，皮向下放入烤盘，烤8分钟。",
+        "配芒果莎莎酱一起上桌。"
+    ],
+    "notes": [
+        "可以试试500°F看糖是否会焦糖化，但注意不要烤焦。"
+    ]
+}

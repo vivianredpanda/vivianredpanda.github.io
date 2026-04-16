@@ -1,0 +1,56 @@
+{
+    "id": 16,
+    "categoryId": "steamed",
+    "image": "/recipes/spicy_poached_chicken.jpg",
+    "name": "口水鸡",
+    "description": "Steamed chicken breast with a numbing Sichuan sauce of chili, flower pepper, garlic, vinegar, and soy.",
+    "difficulty": "Medium",
+    "time": "40 min",
+    "tags": [
+        "Chicken",
+        "Spicy",
+        "Chinese"
+    ],
+    "makes": "2",
+    "ingredients": [
+        {
+            "group": "鸡肉腌料",
+            "items": [
+                "2个 鸡胸肉",
+                "1 tbsp 料酒",
+                "3片 姜（姜丝）",
+                "1 tbsp 酱油",
+                "盐"
+            ]
+        },
+        {
+            "group": "料汁（干料）",
+            "items": [
+                "4 tsp 辣椒面",
+                "2 tsp 花椒粉",
+                "5颗 蒜（切末）",
+                "1颗 葱（切末）",
+                "3片 姜（切末）"
+            ]
+        },
+        {
+            "group": "料汁（湿料）",
+            "items": [
+                "3 tbsp 热油",
+                "3 tbsp 酱油",
+                "2 tbsp 醋",
+                "1 tsp 糖"
+            ]
+        }
+    ],
+    "steps": [
+        "鸡胸肉加料酒、姜丝、酱油、盐腌15分钟。",
+        "蒸锅水开后，中火蒸鸡胸肉15分钟。",
+        "将料汁干料放入碗中，浇上热油激香。",
+        "加入湿料搅匀成料汁。",
+        "鸡肉稍凉后切小块，浇上料汁。"
+    ],
+    "notes": [
+        "料汁可以提前把干料+热油做好，吃之前再按比例加醋和酱油，方便多次使用。"
+    ]
+}

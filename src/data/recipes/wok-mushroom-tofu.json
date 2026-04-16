@@ -1,0 +1,32 @@
+{
+    "id": 17,
+    "categoryId": "wok",
+    "image": "/recipes/mushroom_tofu.jpg",
+    "name": "菌菇豆腐",
+    "description": "Pan-fried tofu simmered with oyster mushrooms in soy-ginger sauce until the tofu soaks up everything.",
+    "difficulty": "Easy",
+    "time": "30 min",
+    "tags": [
+        "Chinese"
+    ],
+    "makes": "1",
+    "ingredients": [
+        {
+            "items": [
+                "⅓块 豆腐",
+                "1颗 杏鲍菇  或  6颗 口蘑（可加蟹味菇、香菇）",
+                "葱（葱白和葱花分开）",
+                "2勺 酱油",
+                "1勺 糖",
+                "⅓勺 胡椒粉",
+                "小青豆"
+            ]
+        }
+    ],
+    "steps": [
+        "豆腐切厚片，在油里煎至两面金黄。",
+        "油爆香葱白，放入菌菇翻炒，加少量盐炒匀。",
+        "加入豆腐、酱油、糖、胡椒粉、青豆，倒入半杯水。",
+        "小火炖5–10分钟收汁，撒上葱花。"
+    ]
+}

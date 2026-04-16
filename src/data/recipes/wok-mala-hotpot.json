@@ -1,0 +1,41 @@
+{
+    "id": 19,
+    "categoryId": "wok",
+    "image": "/recipes/mala_hotpot.jpg",
+    "name": "麻辣干锅",
+    "description": "Shrimp, tofu, mushrooms, and glass noodles in a dry Sichuan wok — mala spice, sesame oil finish.",
+    "difficulty": "Medium",
+    "time": "1 hr",
+    "tags": [
+        "Shrimp",
+        "Spicy",
+        "Chinese"
+    ],
+    "makes": "2",
+    "ingredients": [
+        {
+            "items": [
+                "虾（解冻）",
+                "1颗 番茄",
+                "豆腐",
+                "蘑菇、木耳（泡15分钟）、香菇",
+                "青菜",
+                "粉丝（泡30分钟）",
+                "2片 姜",
+                "½ tsp 辣椒粉",
+                "¼ tsp 花椒粉",
+                "½ tsp 孜然粉",
+                "麻油"
+            ]
+        }
+    ],
+    "steps": [
+        "虾解冻，木耳泡15分钟，粉丝泡30分钟。",
+        "杏鲍菇和豆腐切块，在热油里煎一下，盛出。",
+        "姜切片，热油锅下辣椒粉、花椒粉、孜然粉炒香。",
+        "放入番茄炒出汁，再放入蘑菇、木耳、香菇和豆腐翻炒。",
+        "放入青菜和粉丝，加半杯水，大火炒5分钟。",
+        "放入虾，炒5分钟直到水分收干。",
+        "盛出，淋上麻油。"
+    ]
+}

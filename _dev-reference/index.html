@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>vivianredpanda.github.io — Dev Reference</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0e1a2b;
+      color: #cdd;
+      font-family: monospace;
+      padding: 2.5rem;
+      max-width: 720px;
+    }
+    h1 { font-size: 1.2rem; color: #9bd; margin-bottom: 0.3rem; letter-spacing: 0.05em; }
+    .subtitle { font-size: 0.75rem; color: #567; margin-bottom: 2.5rem; line-height: 1.6; }
+    h2 {
+      font-size: 0.8rem; color: #7ab;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      border-bottom: 1px solid #1e3a52;
+      padding-bottom: 0.4rem; margin-bottom: 0.9rem;
+    }
+    section { margin-bottom: 2.5rem; }
+    .tool {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0.8rem 1rem;
+      background: #0a1520;
+      border: 1px solid #1e3a52;
+      border-radius: 6px;
+      margin-bottom: 0.6rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .tool:hover { background: #112030; border-color: #2a5a8c; }
+    .tool-name { font-size: 0.82rem; color: #9bd; margin-bottom: 0.2rem; }
+    .tool-desc { font-size: 0.7rem; color: #567; line-height: 1.55; }
+    .tool-tag {
+      flex-shrink: 0; padding: 0.2rem 0.55rem;
+      background: #1a3a5c; border: 1px solid #2a5a8c;
+      border-radius: 4px; font-size: 0.65rem; color: #7ab;
+      align-self: center;
+    }
+  </style>
+</head>
+<body>
+
+<h1>vivianredpanda.github.io — Dev Reference</h1>
+<p class="subtitle">Interactive tools for positioning and tuning scene elements. Open via the Vite dev server (<code>npm run dev</code>) so image paths resolve correctly.</p>
+
+<section>
+  <h2>Interactive Editors</h2>
+
+  <a class="tool" href="cozyroom-editor.html" target="_blank">
+    <div>
+      <div class="tool-name">cozyroom-editor.html</div>
+      <div class="tool-desc">Drag objects (kitchen, window, bookshelf, aquarium, plant) to set image-% positions. Sliders for VP_IMG_X, VP_IMG_Y, FACTOR, PERSP_DIST. Preview ratio slider simulates non-native viewports to test perspective rotation. Copy outputs OBJECTS array + constants.</div>
+    </div>
+    <span class="tool-tag">CozyRoom.jsx</span>
+  </a>
+
+  <a class="tool" href="kitchen-editor.html" target="_blank">
+    <div>
+      <div class="tool-name">kitchen-editor.html</div>
+      <div class="tool-desc">Drag jar images (jug, jar_1–jar_5, container) to set left/bottom canvas-pixel positions. Right edge resizes width. Sliders adjust labelTop, labelLeft, labelSize. Copy outputs CATEGORY_JARS array.</div>
+    </div>
+    <span class="tool-tag">KitchenScene.jsx</span>
+  </a>
+
+  <a class="tool" href="study-book-editor.html" target="_blank">
+    <div>
+      <div class="tool-name">study-book-editor.html</div>
+      <div class="tool-desc">Drag numbered book hotspots to set top/left canvas-pixel positions. Right/bottom edges resize width/height. Add and remove books to match project count. Copy outputs BOOK_POSITIONS array.</div>
+    </div>
+    <span class="tool-tag">StudyScene.jsx</span>
+  </a>
+
+  <a class="tool" href="ray-debug.html" target="_blank">
+    <div>
+      <div class="tool-name">ray-debug.html</div>
+      <div class="tool-desc">Canvas tool for tuning the manta ray body animation. Live sliders for body strip corners (TL/TR/BR/BL) and wing anchor line (the pivot axis the flap rotates around). Values are normalized 0–1; copy back into RayCanvas.jsx.</div>
+    </div>
+    <span class="tool-tag">RayCanvas.jsx</span>
+  </a>
+</section>
+
+</body>
+</html>

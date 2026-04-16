@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ray Debug</title>
+  <style>
+    body { background: #1a4a6c; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; flex-direction: column; gap: 12px; }
+    canvas { border: 1px solid rgba(255,255,255,0.2); }
+    label { color: white; font: 14px monospace; }
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; max-width: 900px; }
+    .row { display: flex; align-items: center; gap: 6px; color: white; font: 12px monospace; }
+    input[type=range] { width: 120px; }
+    .section-label { color: #aaa; font: bold 11px monospace; width: 100%; margin-top: 6px; }
+  </style>
+</head>
+<body>
+<canvas id="c" width="600" height="360"></canvas>
+<div class="controls" id="controls"></div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+
+// Body strip corners (matching RayCanvas.jsx)
+let pts = {
+  TL: { x: 0.11, y: 0.66 },
+  TR: { x: 0.89, y: 0.00 },
+  BR: { x: 0.91, y: 0.28 },
+  BL: { x: 0.24, y: 1.00 },
+};
+
+// Wing edge anchors: the actual pixel edge of the wing along the TL→TR line.
+// These are the points we pin when animating so the seam stays invisible.
+let wingPts = {
+  TL_WING: { x: 0.11, y: 0.66 },
+  TR_WING: { x: 0.89, y: 0.00 },
+};
+
+const img = new Image();
+img.src = '../public/creatures/ray.png';
+img.onload = draw;
+
+function px(p) { return { x: p.x * W, y: p.y * H }; }
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.drawImage(img, 0, 0, W, H);
+
+  const TL = px(pts.TL), TR = px(pts.TR), BR = px(pts.BR), BL = px(pts.BL);
+  const TLW = px(wingPts.TL_WING), TRW = px(wingPts.TR_WING);
+
+  // Body strip fill
+  ctx.beginPath();
+  ctx.moveTo(TL.x, TL.y); ctx.lineTo(TR.x, TR.y);
+  ctx.lineTo(BR.x, BR.y); ctx.lineTo(BL.x, BL.y);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255, 100, 100, 0.25)';
+  ctx.fill();
+  ctx.strokeStyle = 'red'; ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Top wing fill
+  ctx.beginPath();
+  ctx.moveTo(0, 0); ctx.lineTo(W, 0);
+  ctx.lineTo(TR.x, TR.y); ctx.lineTo(TL.x, TL.y);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(100, 200, 255, 0.15)';
+  ctx.fill();
+  ctx.strokeStyle = 'cyan'; ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Bottom fin fill
+  ctx.beginPath();
+  ctx.moveTo(BL.x, BL.y); ctx.lineTo(BR.x, BR.y);
+  ctx.lineTo(W, H); ctx.lineTo(0, H);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(100, 255, 100, 0.15)';
+  ctx.fill();
+  ctx.strokeStyle = 'lime'; ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Wing anchor line — this is the seam the animation pivots on
+  ctx.beginPath();
+  ctx.moveTo(TLW.x, TLW.y);
+  ctx.lineTo(TRW.x, TRW.y);
+  ctx.strokeStyle = 'orange'; ctx.lineWidth = 2;
+  ctx.setLineDash([6, 3]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Labels
+  ctx.font = 'bold 13px monospace';
+  ctx.fillStyle = 'cyan';   ctx.fillText('TOP WING', 10, 20);
+  ctx.fillStyle = 'red';    ctx.fillText('BODY', W/2 - 20, H/2);
+  ctx.fillStyle = 'lime';   ctx.fillText('BOTTOM FIN', 10, H - 10);
+  ctx.fillStyle = 'orange'; ctx.fillText('WING ANCHOR', TLW.x + 8, (TLW.y + TRW.y) / 2);
+
+  // Body corner dots
+  Object.entries(pts).forEach(([name, p]) => {
+    ctx.beginPath();
+    ctx.arc(p.x * W, p.y * H, 5, 0, Math.PI * 2);
+    ctx.fillStyle = 'yellow'; ctx.fill();
+    ctx.fillStyle = 'yellow';
+    ctx.font = '11px monospace';
+    ctx.fillText(`${name} (${Math.round(p.x*100)}%W, ${Math.round(p.y*100)}%H)`, p.x * W + 7, p.y * H + 4);
+  });
+
+  // Wing anchor dots
+  Object.entries(wingPts).forEach(([name, p]) => {
+    ctx.beginPath();
+    ctx.arc(p.x * W, p.y * H, 6, 0, Math.PI * 2);
+    ctx.fillStyle = 'orange'; ctx.fill();
+    ctx.fillStyle = 'orange';
+    ctx.font = '11px monospace';
+    ctx.fillText(`${name} (${Math.round(p.x*100)}%W, ${Math.round(p.y*100)}%H)`, p.x * W + 8, p.y * H + 4);
+  });
+}
+
+// Build sliders
+const controls = document.getElementById('controls');
+
+function addSection(title) {
+  const d = document.createElement('div');
+  d.className = 'section-label';
+  d.textContent = title;
+  controls.appendChild(d);
+}
+
+function addSliders(obj, keys) {
+  keys.forEach(name => {
+    ['x','y'].forEach(axis => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      const label = document.createElement('label');
+      label.textContent = `${name}.${axis}: `;
+      const slider = document.createElement('input');
+      slider.type = 'range'; slider.min = 0; slider.max = 100; slider.step = 1;
+      slider.value = Math.round(obj[name][axis] * 100);
+      const val = document.createElement('span');
+      val.textContent = slider.value + '%';
+      slider.oninput = () => {
+        obj[name][axis] = slider.value / 100;
+        val.textContent = slider.value + '%';
+        draw();
+      };
+      row.appendChild(label); row.appendChild(slider); row.appendChild(val);
+      controls.appendChild(row);
+    });
+  });
+}
+
+addSection('Body strip corners');
+addSliders(pts, ['TL','TR','BR','BL']);
+addSection('Wing anchor (orange dashed line = animation pivot)');
+addSliders(wingPts, ['TL_WING','TR_WING']);
+</script>
+</body>
+</html>

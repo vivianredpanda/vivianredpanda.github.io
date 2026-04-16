@@ -1,0 +1,40 @@
+{
+    "id": 11,
+    "categoryId": "braised",
+    "image": "/recipes/glazed_beef.jpg",
+    "name": "酱牛肉",
+    "description": "Whole beef simmered in spiced soy with star anise and lemon peel, sliced thin and glazed in reduced sauce.",
+    "difficulty": "Medium",
+    "time": "2 hrs",
+    "tags": [
+        "Beef",
+        "Chinese",
+        "Meal Prep"
+    ],
+    "makes": "6",
+    "ingredients": [
+        {
+            "items": [
+                "两拳牛腩",
+                "1片 蒜",
+                "2片 姜",
+                "1颗 八角",
+                "½ 八角大小的桂皮",
+                "1片 柠檬皮",
+                "1 tbsp 酱油",
+                "3 tsp 糖",
+                "1 tbsp 料酒"
+            ]
+        }
+    ],
+    "steps": [
+        "牛腩冷水加料酒下锅焯水，撇去浮沫捞出。",
+        "将切片姜、拍蒜、八角、桂皮、柠檬皮放入锅，小火煮45分钟。",
+        "加入酱油和糖，调味后中火再煮15分钟。",
+        "捞出牛肉，稍凉后切薄片放回锅中。",
+        "大火收汁，不断翻动确保每片肉均匀裹上酱汁。"
+    ],
+    "notes": [
+        "酱油和糖的比例需要摸索——之前用2 tbsp酱油、5 tsp糖偏咸，本配方已减量。"
+    ]
+}

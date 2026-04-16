@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Study Book Editor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0e1a2b; color: #cdd; font-family: monospace; display: flex; height: 100vh; overflow: hidden; }
+
+    #panel {
+      width: 270px; min-width: 270px; padding: 1.1rem;
+      background: #091320; border-right: 1px solid #1e3a52;
+      overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    h1 { font-size: 0.95rem; color: #9bd; letter-spacing: 0.05em; }
+    .subtitle { font-size: 0.68rem; color: #567; line-height: 1.5; }
+    hr { border: none; border-top: 1px solid #1e3a52; }
+    .sec { font-size: 0.68rem; color: #7ab; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .zoom-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; }
+    .zoom-row input { flex: 1; }
+    .zv { width: 36px; text-align: right; color: #9bd; }
+
+    .book-list { display: flex; flex-direction: column; gap: 0.2rem; max-height: 260px; overflow-y: auto; }
+    .book-item {
+      padding: 0.28rem 0.6rem; border-radius: 4px; border: 1px solid #1e3a52;
+      cursor: pointer; font-size: 0.68rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .book-item:hover { background: #122030; }
+    .book-item.sel { background: #152a40; border-color: #4a8ac8; }
+    .book-item .coords { color: #567; font-size: 0.62rem; }
+
+    .detail { padding: 0.6rem; border: 1px solid #1e3a52; border-radius: 6px; font-size: 0.7rem; }
+    .row { display: flex; justify-content: space-between; line-height: 1.9; }
+    .val { color: #9bd; }
+
+    .btn-row { display: flex; gap: 0.4rem; }
+    .btn {
+      flex: 1; padding: 0.45rem; background: #152030; border: 1px solid #2a4a6c;
+      border-radius: 5px; color: #9bd; font-family: monospace; font-size: 0.72rem;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .btn:hover { background: #1a3a5c; }
+    .btn.danger { border-color: #6c2a2a; color: #f88; }
+    .btn.danger:hover { background: #3a1a1a; }
+
+    .copy-btn {
+      padding: 0.55rem; width: 100%; margin-top: auto;
+      background: #1a3a5c; border: 1px solid #2a5a8c; border-radius: 6px;
+      color: #9bd; font-family: monospace; font-size: 0.78rem; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #1e4a74; }
+    .copy-btn.ok { background: #1a4a2a; border-color: #2a8c5a; color: #9db; }
+
+    #wrap { flex: 1; overflow: auto; padding: 1rem; }
+    #sizer { position: relative; }
+    #stage {
+      position: absolute; top: 0; left: 0;
+      width: 1344px; height: 768px;
+      transform-origin: top left;
+      background: #000; cursor: crosshair;
+    }
+    #stage img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; user-select: none; }
+
+    .book-el {
+      position: absolute; cursor: grab; user-select: none;
+      border: 2px solid rgba(168,192,154,0.8);
+      border-radius: 3px; background: rgba(168,192,154,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .book-el:active { cursor: grabbing; }
+    .book-el.sel { border-color: white; background: rgba(255,255,255,0.12); }
+    .book-el .num { font-size: 9px; color: rgba(255,255,255,0.8); pointer-events: none; font-weight: bold; }
+    .book-el .rh { position: absolute; top: 0; right: -5px; width: 10px; height: 100%; cursor: ew-resize; }
+    .book-el .bh { position: absolute; bottom: -5px; left: 0; height: 10px; width: 100%; cursor: ns-resize; }
+
+    #ghost {
+      position: absolute; pointer-events: none; z-index: 99;
+      border: 2px dashed rgba(168,192,154,0.9);
+      background: rgba(168,192,154,0.08);
+    }
+  </style>
+</head>
+<body>
+
+<div id="panel">
+  <h1>Study Book Editor</h1>
+  <p class="subtitle">Drag existing books to reposition. Right/bottom edges resize. Draw on empty canvas to create a new book.</p>
+  <hr/>
+  <div class="sec">Zoom</div>
+  <div class="zoom-row">
+    <input type="range" id="zoom" min="40" max="100" value="70" />
+    <span class="zv" id="zv">70%</span>
+  </div>
+  <hr/>
+  <div class="sec">Books <span style="color:#567; font-size:0.62rem; text-transform:none; letter-spacing:0">(${count})</span></div>
+  <div class="book-list" id="book-list"></div>
+  <div class="btn-row" style="margin-top:0.4rem">
+    <button class="btn danger" id="del-btn">Remove selected</button>
+  </div>
+  <hr/>
+  <div class="sec">Selected</div>
+  <div id="detail">—</div>
+  <hr/>
+  <button class="copy-btn" id="copy-btn">Copy BOOK_POSITIONS</button>
+</div>
+
+<div id="wrap"><div id="sizer"><div id="stage">
+  <img class="bg" src="../public/scenes/study.png" alt="" draggable="false" />
+  <div id="ghost" style="display:none"></div>
+</div></div></div>
+
+<script>
+const CANVAS_W = 1344, CANVAS_H = 768;
+
+let BOOKS = [
+  { top: 56,  left: 550,  width: 18, height: 90 },
+  { top: 60,  left: 686,  width: 18, height: 87 },
+  { top: 55,  left: 879,  width: 15, height: 90 },
+  { top: 198, left: 608,  width: 14, height: 77 },
+  { top: 53,  left: 792,  width: 16, height: 96 },
+  { top: 188, left: 719,  width: 19, height: 82 },
+  { top: 323, left: 579,  width: 17, height: 85 },
+  { top: 179, left: 788,  width: 21, height: 94 },
+  { top: 318, left: 701,  width: 25, height: 88 },
+  { top: 456, left: 747,  width: 21, height: 79 },
+  { top: 591, left: 753,  width: 19, height: 86 },
+  { top: 60,  left: 1014, width: 15, height: 88 },
+  { top: 189, left: 897,  width: 20, height: 85 },
+  { top: 196, left: 966,  width: 19, height: 77 },
+  { top: 183, left: 1076, width: 19, height: 89 },
+  { top: 317, left: 933,  width: 18, height: 90 },
+  { top: 313, left: 1031, width: 14, height: 94 },
+  { top: 318, left: 1116, width: 18, height: 91 },
+  { top: 313, left: 850,  width: 14, height: 93 },
+  { top: 448, left: 1013, width: 12, height: 89 },
+  { top: 449, left: 890,  width: 17, height: 86 },
+  { top: 449, left: 890,  width: 17, height: 86 },
+];
+
+let sel       = null;
+let drag      = null;
+let drawState = null;
+let zoom      = 1.25;
+
+const stage = document.getElementById('stage');
+const sizer = document.getElementById('sizer');
+const ghost = document.getElementById('ghost');
+
+function applyZoom(z) {
+  zoom = z;
+  stage.style.transform = `scale(${z})`;
+  sizer.style.width  = `${Math.round(CANVAS_W * z)}px`;
+  sizer.style.height = `${Math.round(CANVAS_H * z)}px`;
+}
+
+function canvasCoords(e) {
+  const r = stage.getBoundingClientRect();
+  return { x: (e.clientX - r.left) / zoom, y: (e.clientY - r.top) / zoom };
+}
+
+function render() {
+  document.querySelectorAll('.book-el').forEach(e => e.remove());
+
+  BOOKS.forEach((book, i) => {
+    const el = document.createElement('div');
+    el.className = 'book-el' + (i === sel ? ' sel' : '');
+    el.style.cssText = `left:${book.left}px; top:${book.top}px; width:${book.width}px; height:${book.height}px;`;
+
+    const num = document.createElement('div');
+    num.className = 'num';
+    num.textContent = i;
+    el.appendChild(num);
+
+    const rh = document.createElement('div'); rh.className = 'rh'; el.appendChild(rh);
+    const bh = document.createElement('div'); bh.className = 'bh'; el.appendChild(bh);
+
+    el.addEventListener('pointerdown', (e) => {
+      if (e.target === rh || e.target === bh) return;
+      e.preventDefault(); e.stopPropagation();
+      sel = i;
+      const c = canvasCoords(e);
+      drag = { type: 'move', idx: i, startCX: c.x, startCY: c.y, orig: { left: book.left, top: book.top } };
+      el.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    rh.addEventListener('pointerdown', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      sel = i;
+      const c = canvasCoords(e);
+      drag = { type: 'rw', idx: i, startCX: c.x, orig: { width: book.width } };
+      rh.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    bh.addEventListener('pointerdown', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      sel = i;
+      const c = canvasCoords(e);
+      drag = { type: 'bh', idx: i, startCY: c.y, orig: { height: book.height } };
+      bh.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    stage.insertBefore(el, ghost);
+  });
+
+  // Update count label
+  const sec = document.querySelector('#panel .sec');
+  if (sec) sec.innerHTML = `Books <span style="color:#567; font-size:0.62rem; text-transform:none; letter-spacing:0">(${BOOKS.length})</span>`;
+
+  const list = document.getElementById('book-list');
+  list.innerHTML = '';
+  BOOKS.forEach((book, i) => {
+    const item = document.createElement('div');
+    item.className = 'book-item' + (i === sel ? ' sel' : '');
+    item.innerHTML = `<span style="color:#a8c09a">#${i}</span><span class="coords">t${book.top} l${book.left} ${book.width}x${book.height}</span>`;
+    item.addEventListener('click', () => { sel = i; render(); });
+    list.appendChild(item);
+  });
+
+  const d = document.getElementById('detail');
+  if (sel === null || !BOOKS[sel]) { d.textContent = '—'; return; }
+  const b = BOOKS[sel];
+  d.innerHTML = `<div class="detail">
+    <div class="row"><span>top</span><span class="val">${b.top}px</span></div>
+    <div class="row"><span>left</span><span class="val">${b.left}px</span></div>
+    <div class="row"><span>width</span><span class="val">${b.width}px</span></div>
+    <div class="row"><span>height</span><span class="val">${b.height}px</span></div>
+  </div>`;
+}
+
+// Drag existing books
+window.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const book = BOOKS[drag.idx];
+  const c = canvasCoords(e);
+  if (drag.type === 'move') {
+    book.left = Math.round(Math.max(0, Math.min(CANVAS_W - book.width,  drag.orig.left + c.x - drag.startCX)));
+    book.top  = Math.round(Math.max(0, Math.min(CANVAS_H - book.height, drag.orig.top  + c.y - drag.startCY)));
+  } else if (drag.type === 'rw') {
+    book.width  = Math.round(Math.max(4, drag.orig.width  + c.x - drag.startCX));
+  } else if (drag.type === 'bh') {
+    book.height = Math.round(Math.max(4, drag.orig.height + c.y - drag.startCY));
+  }
+  render();
+});
+window.addEventListener('pointerup', () => { drag = null; });
+
+// Draw on canvas to create a new book
+stage.addEventListener('pointerdown', (e) => {
+  // Only trigger on the background itself (not on a book-el)
+  if (e.target !== stage && !e.target.classList.contains('bg')) return;
+  e.preventDefault();
+  const c = canvasCoords(e);
+  drawState = { startX: c.x, startY: c.y };
+  ghost.style.cssText = `display:block; left:${c.x}px; top:${c.y}px; width:0; height:0;`;
+  stage.setPointerCapture(e.pointerId);
+});
+
+stage.addEventListener('pointermove', (e) => {
+  if (!drawState) return;
+  const c = canvasCoords(e);
+  const x = Math.min(c.x, drawState.startX);
+  const y = Math.min(c.y, drawState.startY);
+  const w = Math.abs(c.x - drawState.startX);
+  const h = Math.abs(c.y - drawState.startY);
+  ghost.style.cssText = `display:block; left:${x}px; top:${y}px; width:${w}px; height:${h}px;`;
+});
+
+stage.addEventListener('pointerup', (e) => {
+  if (!drawState) return;
+  const c = canvasCoords(e);
+  const x = Math.round(Math.min(c.x, drawState.startX));
+  const y = Math.round(Math.min(c.y, drawState.startY));
+  const w = Math.round(Math.abs(c.x - drawState.startX));
+  const h = Math.round(Math.abs(c.y - drawState.startY));
+  if (w > 4 && h > 4) {
+    BOOKS.push({ top: y, left: x, width: w, height: h });
+    sel = BOOKS.length - 1;
+  }
+  ghost.style.display = 'none';
+  drawState = null;
+  render();
+});
+
+document.getElementById('del-btn').addEventListener('click', () => {
+  if (sel === null) return;
+  BOOKS.splice(sel, 1);
+  sel = null;
+  render();
+});
+
+document.getElementById('zoom').addEventListener('input', (e) => {
+  applyZoom(e.target.value * 1.25 / 70);
+  document.getElementById('zv').textContent = e.target.value + '%';
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  const lines = BOOKS.map(b => `  { top: ${b.top}, left: ${b.left}, width: ${b.width}, height: ${b.height} },`);
+  const text = `export const BOOK_POSITIONS = [\n${lines.join('\n')}\n];`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!'; btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copy BOOK_POSITIONS'; btn.classList.remove('ok'); }, 2000);
+  });
+});
+
+applyZoom(zoom);
+render();
+</script>
+</body>
+</html>

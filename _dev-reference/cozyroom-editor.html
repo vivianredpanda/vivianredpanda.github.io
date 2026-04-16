@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cozy Room Editor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0e1a2b; color: #cdd; font-family: monospace; display: flex; height: 100vh; overflow: hidden; }
+
+    #panel {
+      width: 280px; min-width: 280px; padding: 1.1rem;
+      background: #091320; border-right: 1px solid #1e3a52;
+      overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    h1 { font-size: 0.95rem; color: #9bd; letter-spacing: 0.05em; }
+    .subtitle { font-size: 0.68rem; color: #567; line-height: 1.5; }
+    hr { border: none; border-top: 1px solid #1e3a52; }
+    .sec { font-size: 0.68rem; color: #7ab; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .slider-row { display: flex; align-items: center; gap: 0.4rem; font-size: 0.68rem; }
+    .slider-row label { width: 90px; flex-shrink: 0; }
+    .slider-row input[type=range] { flex: 1; }
+    .slider-row .sv { width: 40px; text-align: right; color: #9bd; }
+
+    .obj-list { display: flex; flex-direction: column; gap: 0.25rem; }
+    .obj-item {
+      padding: 0.32rem 0.6rem; border-radius: 4px; border: 1px solid #1e3a52;
+      cursor: pointer; font-size: 0.7rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .obj-item:hover { background: #122030; }
+    .obj-item.sel { background: #152a40; border-color: #4a8ac8; }
+    .obj-item .coords { color: #567; font-size: 0.62rem; }
+
+    .detail { padding: 0.6rem; border: 1px solid #1e3a52; border-radius: 6px; font-size: 0.7rem; }
+    .row { display: flex; justify-content: space-between; line-height: 1.85; }
+    .val { color: #9bd; }
+
+    .copy-btn {
+      padding: 0.55rem; width: 100%; margin-top: auto;
+      background: #1a3a5c; border: 1px solid #2a5a8c; border-radius: 6px;
+      color: #9bd; font-family: monospace; font-size: 0.78rem; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #1e4a74; }
+    .copy-btn.ok { background: #1a4a2a; border-color: #2a8c5a; color: #9db; }
+
+    #wrap { flex: 1; overflow: auto; padding: 1rem; }
+    #sizer { position: relative; }
+    /* single element — scale and perspective both live here */
+    #scene {
+      position: absolute; top: 0; left: 0;
+      width: 1344px; height: 768px;
+      transform-origin: top left;
+    }
+    #stage img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; user-select: none; }
+
+    .obj-el { position: absolute; cursor: grab; user-select: none; }
+    .obj-el:active { cursor: grabbing; }
+    .obj-el img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: bottom; pointer-events: none; user-select: none; }
+    .obj-el .outline { position: absolute; inset: 0; border: 2px solid; border-radius: 2px; pointer-events: none; }
+    .obj-el.sel .outline { outline: 2px solid white; outline-offset: 2px; }
+    .obj-el .lbl {
+      position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; white-space: nowrap; padding: 1px 5px;
+      background: rgba(0,0,0,0.75); border-radius: 3px; pointer-events: none; color: white;
+    }
+    .obj-el .rh { position: absolute; top: 0; right: -5px; width: 10px; height: 100%; cursor: ew-resize; }
+    .obj-el .bh { position: absolute; bottom: -5px; left: 0; height: 10px; width: 100%; cursor: ns-resize; }
+
+    #vp-cross {
+      position: absolute; pointer-events: none; z-index: 100;
+    }
+    #vp-cross::before, #vp-cross::after {
+      content: ''; position: absolute; background: rgba(255,200,0,0.85);
+    }
+    #vp-cross::before { width: 1px; height: 24px; left: -0.5px; top: -12px; }
+    #vp-cross::after  { width: 24px; height: 1px; left: -12px; top: -0.5px; }
+  </style>
+</head>
+<body>
+
+<div id="panel">
+  <h1>Cozy Room Editor</h1>
+  <p class="subtitle">Drag objects to reposition. Right/bottom edges resize. Perspective sliders update live — move Preview ratio away from 1.75 to see rotation.</p>
+  <hr/>
+
+  <div class="sec">Zoom</div>
+  <div class="slider-row">
+    <label>Zoom</label>
+    <input type="range" id="zoom" min="40" max="100" value="70" />
+    <span class="sv" id="zoom-val">70%</span>
+  </div>
+  <hr/>
+
+  <div class="sec">Perspective</div>
+  <div class="slider-row">
+    <label>VP_IMG_X</label>
+    <input type="range" id="vp-x" min="0" max="100" step="0.5" value="48" />
+    <span class="sv" id="vp-x-val">48</span>
+  </div>
+  <div class="slider-row">
+    <label>VP_IMG_Y</label>
+    <input type="range" id="vp-y" min="0" max="100" step="0.5" value="42" />
+    <span class="sv" id="vp-y-val">42</span>
+  </div>
+  <div class="slider-row">
+    <label>FACTOR</label>
+    <input type="range" id="factor" min="0" max="20" step="0.25" value="5" />
+    <span class="sv" id="factor-val">5</span>
+  </div>
+  <div class="slider-row">
+    <label>PERSP_DIST</label>
+    <input type="range" id="persp" min="200" max="2000" step="10" value="800" />
+    <span class="sv" id="persp-val">800</span>
+  </div>
+  <div class="slider-row">
+    <label>Preview ratio</label>
+    <input type="range" id="preview-ratio" min="0.6" max="2.2" step="0.05" value="1.0" />
+    <span class="sv" id="ratio-val">1.0</span>
+  </div>
+  <div style="font-size:0.62rem; color:#456; margin-top:-0.3rem">Native = 1.75 (no rotation)</div>
+  <hr/>
+
+  <div class="sec">Objects</div>
+  <div class="obj-list" id="obj-list"></div>
+  <hr/>
+
+  <div class="sec">Selected</div>
+  <div id="detail">—</div>
+  <hr/>
+
+  <button class="copy-btn" id="copy-btn">Copy OBJECTS + constants</button>
+</div>
+
+<div id="wrap">
+  <div id="sizer">
+    <div id="scene">
+      <img class="bg" src="../public/scenes/cozy-room.jpeg" alt="" draggable="false" />
+      <div id="vp-cross"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const IMG_W = 1344, IMG_H = 768;
+const REF_RATIO = IMG_W / IMG_H; // 1.75
+
+let params = { vpX: 48, vpY: 42, factor: 5, perspDist: 800, previewRatio: 1.0 };
+let zoom = 1.25;
+let sel  = null;
+let drag = null;
+
+const OBJECTS = [
+  { key: 'kitchen',   src: '/objects/kitchen.png',   label: 'kitchen',    scene: 'kitchen',  perspDir:  1, transformOrigin: 'right top',  top: -2,  left: 6,    width: 18,   height: 95   },
+  { key: 'window',    src: '/objects/window.png',    label: 'go outside', scene: 'garden',   perspDir:  0, transformOrigin: 'center top', top: 9.5, left: 27,   width: 43.5, height: 52.9 },
+  { key: 'bookshelf', src: '/objects/bookshelf.png', label: 'the study',  scene: 'study',    perspDir: -1, transformOrigin: 'left top',   top: 16,  left: 68.5, width: 17,   height: 71.8 },
+  { key: 'aquarium',  src: '/objects/aquarium2.png', label: 'fish tank',  scene: 'aquarium', perspDir: -1, transformOrigin: 'left top',   top: 43,  left: 76.2, width: 23.2, height: 28.4 },
+  { key: 'plant',     src: '/objects/plant.png',     label: 'plant',      scene: null,       perspDir:  0, transformOrigin: 'center top', top: 33,  left: 57,   width: 19,   height: 50   },
+];
+
+const COLORS = ['#ff6b6b','#74c0fc','#a9e34b','#ffa94d','#da77f2'];
+
+const scene   = document.getElementById('scene');
+const sizer   = document.getElementById('sizer');
+const vpCross = document.getElementById('vp-cross');
+
+function applyZoom(z) {
+  zoom = z;
+  scene.style.transform = `scale(${z})`;
+  sizer.style.width  = `${Math.round(IMG_W * z)}px`;
+  sizer.style.height = `${Math.round(IMG_H * z)}px`;
+}
+
+function canvasCoords(e) {
+  const r = scene.getBoundingClientRect();
+  return { x: (e.clientX - r.left) / zoom, y: (e.clientY - r.top) / zoom };
+}
+
+function pctToPx(pctX, pctY, pctW, pctH) {
+  return {
+    left:   pctX / 100 * IMG_W,
+    top:    pctY / 100 * IMG_H,
+    width:  pctW / 100 * IMG_W,
+    height: pctH / 100 * IMG_H,
+  };
+}
+
+function updatePerspective() {
+  const ratioDelta = REF_RATIO - params.previewRatio;
+  const rotateYMag = ratioDelta * params.factor;
+
+  // perspective and scale both on #scene — same element, no propagation issue
+  scene.style.perspective       = `${params.perspDist}px`;
+  scene.style.perspectiveOrigin = `${params.vpX}% ${params.vpY}%`;
+
+  OBJECTS.forEach(obj => {
+    const el = scene.querySelector(`[data-key="${obj.key}"]`);
+    if (!el) return;
+    const rotY = obj.perspDir * rotateYMag;
+    el.style.transform       = rotY !== 0 ? `rotateY(${rotY.toFixed(2)}deg)` : '';
+    el.style.transformOrigin = obj.transformOrigin;
+  });
+
+  vpCross.style.left = `${params.vpX}%`;
+  vpCross.style.top  = `${params.vpY}%`;
+}
+
+function render() {
+  document.querySelectorAll('.obj-el').forEach(e => e.remove());
+
+  OBJECTS.forEach((obj, i) => {
+    const color = COLORS[i % COLORS.length];
+    const px = pctToPx(obj.left, obj.top, obj.width, obj.height);
+
+    const el = document.createElement('div');
+    el.className = 'obj-el' + (obj.key === sel ? ' sel' : '');
+    el.dataset.key = obj.key;
+    el.style.cssText = `left:${px.left}px; top:${px.top}px; width:${px.width}px; height:${px.height}px;`;
+
+    const img = document.createElement('img');
+    img.src = `../public${obj.src}`;
+    el.appendChild(img);
+
+    const outline = document.createElement('div');
+    outline.className = 'outline';
+    outline.style.borderColor = color;
+    el.appendChild(outline);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'lbl';
+    lbl.textContent = obj.label;
+    lbl.style.color = color;
+    el.appendChild(lbl);
+
+    const rh = document.createElement('div'); rh.className = 'rh'; el.appendChild(rh);
+    const bh = document.createElement('div'); bh.className = 'bh'; el.appendChild(bh);
+
+    el.addEventListener('pointerdown', (e) => {
+      if (e.target === rh || e.target === bh) return;
+      e.preventDefault();
+      sel = obj.key;
+      const c = canvasCoords(e);
+      drag = { type: 'move', key: obj.key, startCX: c.x, startCY: c.y, orig: { left: obj.left, top: obj.top } };
+      el.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    rh.addEventListener('pointerdown', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      sel = obj.key;
+      const c = canvasCoords(e);
+      drag = { type: 'rw', key: obj.key, startCX: c.x, orig: { width: obj.width } };
+      rh.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    bh.addEventListener('pointerdown', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      sel = obj.key;
+      const c = canvasCoords(e);
+      drag = { type: 'bh', key: obj.key, startCY: c.y, orig: { height: obj.height } };
+      bh.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    scene.insertBefore(el, vpCross);
+  });
+
+  // List
+  const list = document.getElementById('obj-list');
+  list.innerHTML = '';
+  OBJECTS.forEach((obj, i) => {
+    const color = COLORS[i % COLORS.length];
+    const item = document.createElement('div');
+    item.className = 'obj-item' + (obj.key === sel ? ' sel' : '');
+    item.innerHTML = `<span style="color:${color}">${obj.key}</span><span class="coords">${obj.left.toFixed(1)},${obj.top.toFixed(1)} ${obj.width.toFixed(1)}x${obj.height.toFixed(1)}</span>`;
+    item.addEventListener('click', () => { sel = obj.key; render(); });
+    list.appendChild(item);
+  });
+
+  // Detail
+  const d = document.getElementById('detail');
+  const obj = OBJECTS.find(o => o.key === sel);
+  if (!obj) { d.textContent = '—'; updatePerspective(); return; }
+  d.innerHTML = `<div class="detail">
+    <div class="row"><span>top</span><span class="val">${obj.top.toFixed(2)}%</span></div>
+    <div class="row"><span>left</span><span class="val">${obj.left.toFixed(2)}%</span></div>
+    <div class="row"><span>width</span><span class="val">${obj.width.toFixed(2)}%</span></div>
+    <div class="row"><span>height</span><span class="val">${obj.height.toFixed(2)}%</span></div>
+    <div class="row"><span>perspDir</span><span class="val">${obj.perspDir}</span></div>
+    <div class="row"><span>scene</span><span class="val">${obj.scene ?? 'static'}</span></div>
+  </div>`;
+
+  updatePerspective();
+}
+
+window.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const obj = OBJECTS.find(o => o.key === drag.key);
+  const c = canvasCoords(e);
+  if (drag.type === 'move') {
+    obj.left = +((drag.orig.left + (c.x - drag.startCX) / IMG_W * 100).toFixed(2));
+    obj.top  = +((drag.orig.top  + (c.y - drag.startCY) / IMG_H * 100).toFixed(2));
+  } else if (drag.type === 'rw') {
+    obj.width  = Math.max(0.5, +((drag.orig.width  + (c.x - drag.startCX) / IMG_W * 100).toFixed(2)));
+  } else if (drag.type === 'bh') {
+    obj.height = Math.max(0.5, +((drag.orig.height + (c.y - drag.startCY) / IMG_H * 100).toFixed(2)));
+  }
+  render();
+});
+
+window.addEventListener('pointerup', () => { drag = null; });
+
+// Perspective sliders
+[
+  ['vp-x',         'vpX',          'vp-x-val'],
+  ['vp-y',         'vpY',          'vp-y-val'],
+  ['factor',       'factor',       'factor-val'],
+  ['persp',        'perspDist',    'persp-val'],
+  ['preview-ratio','previewRatio', 'ratio-val'],
+].forEach(([id, key, valId]) => {
+  document.getElementById(id).addEventListener('input', (e) => {
+    params[key] = parseFloat(e.target.value);
+    document.getElementById(valId).textContent = e.target.value;
+    updatePerspective();
+  });
+});
+
+document.getElementById('zoom').addEventListener('input', (e) => {
+  applyZoom(e.target.value * 1.25 / 70);
+  document.getElementById('zoom-val').textContent = e.target.value + '%';
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  const main  = OBJECTS.filter(o => o.key !== 'plant');
+  const plant = OBJECTS.find(o => o.key === 'plant');
+  const objLines = main.map(o =>
+    `  {\n    key: '${o.key}', src: '${o.src}', label: '${o.label}', scene: '${o.scene}',\n    top: ${o.top}, left: ${o.left}, width: ${o.width}, height: ${o.height},\n    perspectiveDir: ${o.perspDir}, transformOrigin: '${o.transformOrigin}',\n  },`
+  );
+  const text = [
+    `const VP_IMG_X   = ${params.vpX};`,
+    `const VP_IMG_Y   = ${params.vpY};`,
+    `const FACTOR     = ${params.factor};`,
+    `const PERSP_DIST = ${params.perspDist};`,
+    '',
+    'const OBJECTS = [',
+    ...objLines,
+    '];',
+    '',
+    `// Plant (static): top: ${plant.top}, left: ${plant.left}, width: ${plant.width}, height: ${plant.height}`,
+  ].join('\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!'; btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copy OBJECTS + constants'; btn.classList.remove('ok'); }, 2000);
+  });
+});
+
+applyZoom(zoom);
+render();
+</script>
+</body>
+</html>

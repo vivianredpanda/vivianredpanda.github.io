@@ -1,0 +1,39 @@
+{
+    "id": 12,
+    "categoryId": "braised",
+    "image": "/recipes/chicken_potato_stew.jpg",
+    "name": "土豆鸡",
+    "description": "Chicken legs braised with potato and carrot in caramelized sugar soy — homey and deeply satisfying.",
+    "difficulty": "Medium",
+    "time": "1.5 hrs",
+    "tags": [
+        "Chicken",
+        "Chinese"
+    ],
+    "makes": "4",
+    "ingredients": [
+        {
+            "items": [
+                "2个 鸡腿",
+                "2颗 土豆",
+                "1颗 胡萝卜",
+                "2颗 蒜",
+                "2片 姜",
+                "1颗 葱",
+                "½颗 八角",
+                "辣椒",
+                "2勺 糖（炒糖色）",
+                "酱油、料酒",
+                "小青豆"
+            ]
+        }
+    ],
+    "steps": [
+        "冷水放入鸡腿、姜、葱、料酒焯水，水开后等3分钟捞出。",
+        "锅里热油，土豆和胡萝卜煎到略有焦色，盛出。",
+        "同锅放油和糖，小火慢熬成焦糖色。",
+        "放入鸡腿翻炒，再放入八角、辣椒、蒜翻炒。",
+        "淋入2勺酱油、1勺糖、盐，翻炒均匀。",
+        "加水，放入土豆和胡萝卜，中小火煮20分钟，放入小青豆，收汁。"
+    ]
+}

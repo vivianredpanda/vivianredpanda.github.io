@@ -1,0 +1,32 @@
+{
+    "id": 21,
+    "categoryId": "roasted",
+    "image": "/recipes/salmon.jpg",
+    "name": "三文鱼",
+    "description": "Oven-roasted salmon skin-down with lemon slices, salt, and pepper. Unfussy and clean.",
+    "difficulty": "Easy",
+    "time": "~45 min",
+    "tags": [
+        "Salmon"
+    ],
+    "makes": "1",
+    "ingredients": [
+        {
+            "items": [
+                "1片 三文鱼",
+                "油",
+                "盐、胡椒粉",
+                "柠檬片"
+            ]
+        }
+    ],
+    "steps": [
+        "三文鱼用厨房纸吸干水分，放回冰箱备用。",
+        "烤箱预热至375°F。",
+        "三文鱼抹油，撒盐和胡椒粉，皮向下放入烤盘，柠檬片放在上面。",
+        "将温度升到390°F，当温度接近390°F时再烤10分钟即可。"
+    ],
+    "notes": [
+        "温度和时间还没完全掌握，有可能时间要短一些，下次可以尝试降低温度。"
+    ]
+}

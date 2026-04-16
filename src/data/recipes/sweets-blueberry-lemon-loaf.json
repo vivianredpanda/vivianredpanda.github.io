@@ -1,0 +1,40 @@
+{
+    "id": 4,
+    "categoryId": "sweets",
+    "image": "/recipes/blueberry_lemon_loaf_cute.jpg",
+    "name": "Blueberry Lemon Loaf",
+    "description": "Dense, moist loaf with fresh blueberries and bright lemon zest — olive oil keeps it tender.",
+    "difficulty": "Easy",
+    "time": "1.5 hrs",
+    "tags": [
+        "Breakfast",
+        "Dessert"
+    ],
+    "makes": "16 slices",
+    "ingredients": [
+        {
+            "items": [
+                "100ml olive oil",
+                "2 eggs",
+                "100g sugar",
+                "2 tbsp lemon juice + 1 tbsp lemon zest (candied lemon)",
+                "120ml milk",
+                "190g flour",
+                "1 tsp baking powder  (or: ¼ tsp baking soda + ½ tsp lemon juice + ¼ tsp flour)",
+                "150g blueberries tossed with 1 tsp flour"
+            ]
+        }
+    ],
+    "steps": [
+        "Preheat oven to 350°F (try 375°F). Grease medium pan (28 in²).",
+        "In a bowl, whisk together oil, eggs, sugar, lemon juice, lemon zest, and milk.",
+        "Add flour and baking powder and mix until evenly combined.",
+        "Gradually fold dry into wet until no flour chunks remain.",
+        "Gently fold in the flour-coated blueberries.",
+        "Pour into pan and bake 40–45 min (use a chopstick to check — if batter sticks, keep going)."
+    ],
+    "notes": [
+        "Mine took ~55 min — keep checking.",
+        "Try reducing sugar slightly next time."
+    ]
+}

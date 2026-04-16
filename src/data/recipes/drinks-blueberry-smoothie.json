@@ -1,0 +1,29 @@
+{
+    "id": 2,
+    "categoryId": "drinks",
+    "image": "/recipes/blueberry_smoothie.jpg",
+    "name": "Blueberry Smoothie",
+    "description": "Frozen blueberries and greek yogurt blended creamy with a spoonful of peanut butter.",
+    "difficulty": "Easy",
+    "time": "10 min",
+    "tags": [
+        "Breakfast"
+    ],
+    "makes": "1",
+    "ingredients": [
+        {
+            "items": [
+                "¾ cup frozen blueberries",
+                "1 tbsp peanut butter",
+                "½ cup frozen greek yogurt",
+                "¼ cup water"
+            ]
+        }
+    ],
+    "steps": [
+        "Slightly soften the frozen greek yogurt.",
+        "To a blender, add frozen blueberries, water, and peanut butter.",
+        "Blend until smooth.",
+        "Add in the yogurt and blend, pushing down as needed, until fully smooth."
+    ]
+}

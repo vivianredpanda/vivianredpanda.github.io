@@ -1,0 +1,33 @@
+{
+    "id": 5,
+    "categoryId": "sweets",
+    "image": "/recipes/snow_fungus_soup.jpg",
+    "name": "银耳汤",
+    "description": "Slow-simmered sweet soup with tremella mushroom, red dates, and wolfberries. Silky and restorative.",
+    "difficulty": "Easy",
+    "time": "6 hrs",
+    "tags": [
+        "Dessert Soup"
+    ],
+    "makes": "8",
+    "ingredients": [
+        {
+            "items": [
+                "1勺 干银耳",
+                "红枣（几颗）",
+                "枸杞（一把）",
+                "1勺 冰糖",
+                "1勺 红糖"
+            ]
+        }
+    ],
+    "steps": [
+        "银耳放水里泡两个小时，把银耳切成小块。",
+        "放入锅里，加冷水，大火烧开，水开后转小火煮四个小时。",
+        "加冰糖，再小火煮一个小时。",
+        "出锅加枸杞，调整甜度。"
+    ],
+    "notes": [
+        "很容易糊，注意全程不要把锅盖放在不是小火的状态上。"
+    ]
+}

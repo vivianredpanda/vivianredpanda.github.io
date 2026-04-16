@@ -1,0 +1,53 @@
+{
+    "id": 8,
+    "categoryId": "snacks",
+    "image": "/recipes/wonton.jpg",
+    "name": "鲜虾馄饨",
+    "description": "Pork and whole shrimp wontons folded small, served in fragrant sesame-soy broth with scallion.",
+    "difficulty": "Medium",
+    "time": "3 hrs",
+    "tags": [
+        "Shrimp",
+        "Chinese",
+        "Meal Prep"
+    ],
+    "makes": "4–5 servings",
+    "ingredients": [
+        {
+            "group": "肉馅",
+            "items": [
+                "0.5 lb 猪肉末",
+                "1颗 葱",
+                "6片 姜",
+                "1颗 鸡蛋",
+                "¼ tsp 料酒",
+                "½ tsp 酱油",
+                "½ tsp 麻油",
+                "¼ tsp 糖",
+                "⅛ tsp 盐",
+                "胡椒粉",
+                "16颗 大虾"
+            ]
+        },
+        {
+            "group": "其他",
+            "items": [
+                "60个 馄饨皮（1包）",
+                "½ tsp 酱油",
+                "½ tsp 麻油",
+                "葱花",
+                "胡椒粉"
+            ]
+        }
+    ],
+    "steps": [
+        "事先把虾解冻，葱跟姜剁成末。",
+        "把猪肉、葱、姜、料酒、酱油、麻油、糖、盐、胡椒粉放到金属碗，顺一个方向搅拌上劲。",
+        "虾去头，切成四段，尾巴一分为二，拌入肉馅，放冰箱腌30分钟。",
+        "皮和馅分成四份，一份包完再开下一份（剩下的皮要盖住防干）。",
+        "馄饨皮四角沾水，放一勺馅（有大虾的话放两三小块），包紧。",
+        "沸水里煮3–4分钟。",
+        "碗里放酱油、麻油、葱花、胡椒粉。",
+        "冷冻剩余馄饨约2小时；煮时沸水下锅，再次沸腾后加一小杯冷水，重复一次。"
+    ]
+}

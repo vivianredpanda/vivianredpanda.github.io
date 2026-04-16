@@ -1,0 +1,32 @@
+{
+    "id": 1,
+    "categoryId": "drinks",
+    "image": "/recipes/sparkliing_citrus.jpg",
+    "name": "Citrus Coconut Spritz",
+    "description": "Bright citrus juice with coconut water and club soda — refreshing, lightly sweetened, summer in a glass.",
+    "difficulty": "Easy",
+    "time": "5 min",
+    "tags": [
+        "Mocktail"
+    ],
+    "makes": "1",
+    "ingredients": [
+        {
+            "items": [
+                "1.5 oz citrus honey  or  3 oz citrus juice",
+                "4 oz coconut water",
+                "4 oz club soda",
+                "rosemary sprig or mint leaves",
+                "ice",
+                "sweetener to taste (dash of alcohol optional)"
+            ]
+        }
+    ],
+    "steps": [
+        "Fill a glass with ice.",
+        "Add citrus honey (or juice), coconut water, and sweetener.",
+        "Stir until combined.",
+        "Top off with club soda.",
+        "Garnish with rosemary or mint."
+    ]
+}

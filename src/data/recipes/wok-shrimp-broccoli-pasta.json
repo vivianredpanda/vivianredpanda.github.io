@@ -1,0 +1,40 @@
+{
+    "id": 20,
+    "categoryId": "wok",
+    "image": "/recipes/pasta.jpg",
+    "name": "Shrimp Broccoli Pasta",
+    "description": "Stir-fried shrimp and broccoli with garlic and chili, tossed with pasta and a slowly-melted cheese sauce.",
+    "difficulty": "Easy",
+    "time": "1 hr",
+    "tags": [
+        "Shrimp",
+        "Pasta"
+    ],
+    "makes": "2",
+    "ingredients": [
+        {
+            "items": [
+                "虾（解冻、焯水）",
+                "½颗 西兰花（切小朵）",
+                "意大利面",
+                "cheese（切小块）",
+                "1片 姜",
+                "¼颗 洋葱（可加椒）",
+                "蒜",
+                "辣椒面",
+                "小青豆（可选）",
+                "柠檬汁（可选）",
+                "盐、胡椒粉",
+                "1.5 tsp 油"
+            ]
+        }
+    ],
+    "steps": [
+        "虾解冻焯水。准备姜片、蒜末、洋葱/椒块、西兰花小朵。",
+        "沸水下面煮7分钟，捞出。",
+        "锅里½ tsp油，炒虾和姜片至虾变色，加蒜末、辣椒面、洋葱、椒翻炒，将虾盛出。",
+        "加西兰花、青豆、少量盐翻炒，加水中火煮7分钟至西兰花熟透。",
+        "加入虾和面，放少量盐和水，一起翻炒。",
+        "加入小块cheese，不断搅拌直到慢慢形成sauce，最后加柠檬汁和胡椒粉。"
+    ]
+}

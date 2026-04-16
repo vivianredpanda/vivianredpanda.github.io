@@ -1,0 +1,38 @@
+{
+    "id": 9,
+    "categoryId": "braised",
+    "image": "/recipes/braised_eggplant.png",
+    "name": "茄子煲",
+    "description": "Tender braised eggplant with minced pork, garlic, and a sweet-savory sauce. One pan, very forgiving.",
+    "difficulty": "Easy",
+    "time": "1 hr",
+    "tags": [
+        "Chinese"
+    ],
+    "makes": "1–2",
+    "ingredients": [
+        {
+            "items": [
+                "1颗 茄子",
+                "2 tbsp 猪肉末",
+                "⅓颗 青椒",
+                "2片 蒜",
+                "1颗 葱",
+                "辣椒",
+                "2勺 酱油",
+                "1勺 糖",
+                "料酒、胡椒粉",
+                "小青豆（可选）"
+            ]
+        }
+    ],
+    "steps": [
+        "茄子切小块撒盐，腌10分钟出水分，洗净并弄干。青椒切细条。",
+        "葱白、蒜切末，分成两份（2:1）。姜切末。",
+        "猪肉切小条，加小份葱姜、少量酱油、料酒、胡椒粉，腌一下。",
+        "干锅热油，放辣椒炒到焦脆，下肉末炒散。",
+        "用肉末的余油放入葱白、蒜，翻炒香，再下茄子和青椒。",
+        "加酱油、糖、盐、胡椒粉，翻炒收汁至茄子达到想要的软度。",
+        "可选：放茄子前先铺泡软的粉丝，加半勺醋和水，炖10分钟。"
+    ]
+}

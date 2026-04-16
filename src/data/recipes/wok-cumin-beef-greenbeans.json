@@ -1,0 +1,38 @@
+{
+    "id": 18,
+    "categoryId": "wok",
+    "image": "/recipes/stir_fry_beef.jpg",
+    "name": "孜然牛肉豆角",
+    "description": "Seared thin-sliced beef and blanched green beans tossed with lots of cumin, chili, and onion.",
+    "difficulty": "Medium",
+    "time": "1 hr",
+    "tags": [
+        "Beef",
+        "Spicy",
+        "Chinese"
+    ],
+    "makes": "2",
+    "ingredients": [
+        {
+            "items": [
+                "1拳头 牛肉（逆纹薄切）",
+                "1大把 豆角",
+                "½颗 洋葱",
+                "1颗 蒜",
+                "3片 姜",
+                "1个 干辣椒",
+                "酱油、糖、黑胡椒粉、料酒",
+                "孜然粉（多）",
+                "油"
+            ]
+        }
+    ],
+    "steps": [
+        "牛肉逆纹切薄片，加酱油、¼勺糖、料酒、黑胡椒粉腌，加少量油锁水。（半冰冻状态下切更容易切薄）",
+        "豆角切段，沸水焯5分钟，下油锅炒2分钟，盛出。",
+        "洋葱切条，姜切丝，蒜切片，干辣椒切丁。",
+        "热油大火炒牛肉30秒，变色后盛出。",
+        "同锅下姜、蒜、辣椒炒香，加洋葱炒软。",
+        "倒入牛肉和豆角，加酱油、¼勺糖、黑胡椒粉和大量孜然粉，翻炒均匀。"
+    ]
+}

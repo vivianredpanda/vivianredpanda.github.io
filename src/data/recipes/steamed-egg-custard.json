@@ -1,0 +1,36 @@
+{
+    "id": 15,
+    "categoryId": "steamed",
+    "image": "/recipes/steamed_egg.jpg",
+    "name": "鸡蛋羹",
+    "description": "Silky steamed egg custard with shrimp and peas, finished with sesame oil, soy, and scallion.",
+    "difficulty": "Easy",
+    "time": "30 min",
+    "tags": [
+        "Chinese"
+    ],
+    "makes": "1",
+    "ingredients": [
+        {
+            "items": [
+                "2个 鸡蛋",
+                "150 ml 水",
+                "虾（去壳腌料酒）",
+                "小青豆",
+                "料酒",
+                "盐、胡椒粉",
+                "麻油、酱油、辣椒油、葱花（最后）"
+            ]
+        }
+    ],
+    "steps": [
+        "虾去壳，加少量料酒腌一下。",
+        "鸡蛋打散，加水、盐、胡椒粉搅匀，用勺子撇去表面的泡沫。",
+        "等蒸锅里的水开，中火蒸蛋液5分钟。",
+        "放入虾和青豆，再蒸8分钟。",
+        "出锅淋麻油、酱油、辣椒油，撒葱花。"
+    ],
+    "notes": [
+        "蒸的时间需要根据容器大小调整，用筷子插一下看是否凝固。"
+    ]
+}

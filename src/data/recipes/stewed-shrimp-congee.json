@@ -1,0 +1,41 @@
+{
+    "id": 14,
+    "categoryId": "stewed",
+    "image": "/recipes/congee.jpg",
+    "name": "鲜虾粥",
+    "description": "Slow-simmered rice congee with fresh shrimp, mushrooms, and ginger — the kind of bowl for a grey morning.",
+    "difficulty": "Easy",
+    "time": "1.5 hrs",
+    "tags": [
+        "Shrimp",
+        "Comfort Food",
+        "Chinese"
+    ],
+    "makes": "1",
+    "ingredients": [
+        {
+            "items": [
+                "3 tbsp 米（泡水15分钟）",
+                "5–8颗 虾",
+                "2片 姜（切丝）",
+                "1颗 蒜（切末）",
+                "1颗 葱",
+                "½颗 洋葱（切丁）",
+                "蘑菇（草菇、杏鲍菇均可）",
+                "青菜 / 韭菜 / 卷心菜",
+                "小青豆",
+                "麻油、盐"
+            ]
+        }
+    ],
+    "steps": [
+        "虾去头，把虾仁和虾壳分开留用。米泡水15分钟后沥干。",
+        "姜切丝，蒜切末，葱切葱花，洋葱切丁。",
+        "热油下姜和葱白炒香，加入虾头/虾壳炒出红油。",
+        "放入洋葱翻炒，再加蘑菇（切片）继续炒。",
+        "放米翻炒一下，加2杯水，大火烧开。",
+        "炖10分钟后转小火熬40分钟至1小时至粥浓稠。",
+        "最后加蔬菜和青豆，无虾提前2分钟放、有虾提前5分钟放，调盐。",
+        "盛出后滴麻油，撒葱花。"
+    ]
+}

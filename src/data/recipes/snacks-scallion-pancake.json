@@ -1,0 +1,52 @@
+{
+    "id": 7,
+    "categoryId": "snacks",
+    "image": "/recipes/scallion_pancake.jpg",
+    "name": "葱油饼",
+    "description": "Flaky scallion pancakes layered with spiced oil — crisp outside, tender and chewy within.",
+    "difficulty": "Medium",
+    "time": "3 hrs",
+    "tags": [
+        "Chinese",
+        "Meal Prep"
+    ],
+    "makes": "12",
+    "ingredients": [
+        {
+            "group": "面团",
+            "items": [
+                "300g 面粉",
+                "200g 水",
+                "4g 油",
+                "¾ tsp 盐"
+            ]
+        },
+        {
+            "group": "油酥",
+            "items": [
+                "25g 油（2 tbsp）",
+                "11g 面粉",
+                "1 tsp 盐",
+                "½ tsp 花椒粉",
+                "½ tsp 胡椒粉"
+            ]
+        },
+        {
+            "group": "葱花",
+            "items": [
+                "6颗葱（切葱花）"
+            ]
+        }
+    ],
+    "steps": [
+        "面粉和盐放碗里，慢慢倒入水和面，再加入油，醒面30分钟。",
+        "把葱花用油炸香，再把热油浇在油酥的干料里混合均匀。",
+        "把面团分成12份。",
+        "每份擀成薄片，刷1 tsp油酥，洒上葱花，卷起来，横着从中间切一刀但不切断，两条都卷起来叠在一起，再擀薄。",
+        "平底锅放少油，中火煎至两面金黄。"
+    ],
+    "notes": [
+        "最好一次做一个，剩下的放冷藏保存，要吃再擀薄。",
+        "面粉水比例需要摸索，面团偏粘是正常的。"
+    ]
+}

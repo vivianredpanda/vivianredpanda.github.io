@@ -1,0 +1,41 @@
+{
+    "id": 10,
+    "categoryId": "braised",
+    "image": "/recipes/braised_beef.jpg",
+    "name": "炖牛肉",
+    "description": "Slow-braised beef brisket with potatoes and carrots in deep soy broth, cooked until falling apart.",
+    "difficulty": "Medium",
+    "time": "3 hrs",
+    "tags": [
+        "Beef",
+        "Chinese",
+        "Meal Prep"
+    ],
+    "makes": "3",
+    "ingredients": [
+        {
+            "items": [
+                "400g 牛腩",
+                "3个 土豆",
+                "2个 胡萝卜",
+                "1个 洋葱",
+                "2片 蒜",
+                "8片 姜",
+                "1颗 八角",
+                "1勺 酱油（老抽）",
+                "2勺 白糖",
+                "1勺 醋",
+                "料酒、胡椒粉"
+            ]
+        }
+    ],
+    "steps": [
+        "牛腩切小块，冷水下锅焯水4分钟，捞出用温水洗净。",
+        "姜蒜切片，洋葱切块，土豆胡萝卜切块。",
+        "干锅热油，放少量姜蒜和八角炒香，下牛腩翻炒至表面熟透。",
+        "加料酒和醋翻炒，再加洋葱撒1勺糖，炒软。",
+        "加热水漫过牛肉，放剩余姜蒜，中大火煮20分钟。",
+        "改小火炖1小时。",
+        "加土豆、胡萝卜、盐、老抽，再炖30分钟直到肉烂汁稠，调味。"
+    ]
+}

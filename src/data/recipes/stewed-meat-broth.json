@@ -1,0 +1,52 @@
+{
+    "id": 13,
+    "categoryId": "stewed",
+    "image": "/recipes/meat_broth_cute.jpg",
+    "name": "肉类汤",
+    "description": "Simple restorative bone broth with ginger — chicken, pork (with tomato and corn), or beef (with spices).",
+    "difficulty": "Easy",
+    "time": "2 hrs",
+    "tags": [
+        "Soup",
+        "Slow Cook",
+        "Chinese"
+    ],
+    "makes": "4",
+    "ingredients": [
+        {
+            "group": "基础",
+            "items": [
+                "肉（鸡、猪、或牛）",
+                "4片 姜",
+                "盐"
+            ]
+        },
+        {
+            "group": "鸡汤加",
+            "items": [
+                "1颗 葱"
+            ]
+        },
+        {
+            "group": "猪汤加",
+            "items": [
+                "1颗 番茄",
+                "1颗 玉米 或 冬瓜"
+            ]
+        },
+        {
+            "group": "牛汤加",
+            "items": [
+                "1颗 蒜",
+                "料酒",
+                "八角 或 桂皮"
+            ]
+        }
+    ],
+    "steps": [
+        "锅里放肉，冷水漫过肉。",
+        "大火煮开，撇去浮沫。",
+        "加入姜和对应配料，转小火慢煮（鸡45分钟，猪1小时，牛2小时）。",
+        "最后加盐调味。"
+    ]
+}

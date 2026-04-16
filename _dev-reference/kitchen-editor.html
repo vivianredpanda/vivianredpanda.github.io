@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kitchen Jar Editor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0e1a2b; color: #cdd; font-family: monospace; display: flex; height: 100vh; overflow: hidden; }
+
+    #panel {
+      width: 270px; min-width: 270px; padding: 1.1rem;
+      background: #091320; border-right: 1px solid #1e3a52;
+      overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    h1 { font-size: 0.95rem; color: #9bd; letter-spacing: 0.05em; }
+    .subtitle { font-size: 0.68rem; color: #567; line-height: 1.5; }
+    hr { border: none; border-top: 1px solid #1e3a52; }
+    .sec { font-size: 0.68rem; color: #7ab; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .zoom-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; }
+    .zoom-row input { flex: 1; }
+    .zv { width: 36px; text-align: right; color: #9bd; }
+
+    .jar-list { display: flex; flex-direction: column; gap: 0.25rem; }
+    .jar-item {
+      padding: 0.35rem 0.6rem; border-radius: 4px; border: 1px solid #1e3a52;
+      cursor: pointer; font-size: 0.7rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .jar-item:hover { background: #122030; }
+    .jar-item.sel { background: #152a40; border-color: #4a8ac8; }
+    .jar-item .coords { color: #567; font-size: 0.63rem; }
+
+    .detail { padding: 0.6rem; border: 1px solid #1e3a52; border-radius: 6px; font-size: 0.7rem; }
+    .row { display: flex; justify-content: space-between; line-height: 1.9; }
+    .val { color: #9bd; }
+    .slider-row { display: flex; align-items: center; gap: 0.4rem; font-size: 0.67rem; margin-top: 0.35rem; }
+    .slider-row input { flex: 1; }
+    .sval { width: 28px; text-align: right; color: #9bd; }
+
+    .copy-btn {
+      padding: 0.55rem; width: 100%; margin-top: auto;
+      background: #1a3a5c; border: 1px solid #2a5a8c; border-radius: 6px;
+      color: #9bd; font-family: monospace; font-size: 0.78rem; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #1e4a74; }
+    .copy-btn.ok { background: #1a4a2a; border-color: #2a8c5a; color: #9db; }
+
+    #wrap { flex: 1; overflow: auto; padding: 1rem; }
+    #sizer { position: relative; }
+    #stage {
+      position: absolute; top: 0; left: 0;
+      width: 1344px; height: 768px;
+      transform-origin: top left;
+      background: #000;
+    }
+    #stage img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; user-select: none; }
+
+    .jar-el { position: absolute; cursor: grab; user-select: none; }
+    .jar-el:active { cursor: grabbing; }
+    .jar-el img { display: block; width: 100%; pointer-events: none; user-select: none; }
+    .jar-el .outline { position: absolute; inset: 0; border: 2px solid; border-radius: 3px; pointer-events: none; }
+    .jar-el.sel .outline { outline: 2px solid white; outline-offset: 2px; }
+    .jar-el .lbl {
+      position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+      font-size: 10px; white-space: nowrap; padding: 1px 4px;
+      background: rgba(0,0,0,0.7); border-radius: 3px; pointer-events: none;
+    }
+    .jar-el .rh { position: absolute; top: 0; right: -5px; width: 10px; height: 100%; cursor: ew-resize; }
+  </style>
+</head>
+<body>
+
+<div id="panel">
+  <h1>Kitchen Jar Editor</h1>
+  <p class="subtitle">Drag a jar to set left/bottom. Drag the right edge to resize width. Sliders adjust label position within jar.</p>
+  <hr/>
+  <div class="sec">Zoom</div>
+  <div class="zoom-row">
+    <input type="range" id="zoom" min="40" max="100" value="70" />
+    <span class="zv" id="zv">70%</span>
+  </div>
+  <hr/>
+  <div class="sec">Jars</div>
+  <div class="jar-list" id="jar-list"></div>
+  <hr/>
+  <div class="sec">Selected</div>
+  <div id="detail">—</div>
+  <hr/>
+  <button class="copy-btn" id="copy-btn">Copy CATEGORY_JARS</button>
+</div>
+
+<div id="wrap"><div id="sizer"><div id="stage">
+  <img class="bg" src="../public/scenes/kitchen.png" alt="" draggable="false" />
+</div></div></div>
+
+<script>
+const CANVAS_W = 1344, CANVAS_H = 768;
+const COLORS = ['#ff6b6b','#ffa94d','#ffe066','#69db7c','#38d9d9','#74c0fc','#da77f2','#f783ac','#e8a87c'];
+
+let JARS = [
+  { id: 'drinks',    jar: 'jug',       label: '饮料', left: 814,  bottom: 218, width: 75,  labelTop: 63, labelLeft: 59, labelSize: 15 },
+  { id: 'sweets',    jar: 'jar_1',     label: '甜食', left: 481,  bottom: 220, width: 43,  labelTop: 58, labelLeft: 52, labelSize: 15 },
+  { id: 'snacks',    jar: 'jar_5',     label: '点心', left: 524,  bottom: 220, width: 44,  labelTop: 64, labelLeft: 52, labelSize: 13 },
+  { id: 'braised',   jar: 'jar_3',     label: '炖',   left: 650,  bottom: 221, width: 34,  labelTop: 60, labelLeft: 51, labelSize: 15 },
+  { id: 'stewed',    jar: 'jar_4',     label: '熬煮', left: 568,  bottom: 220, width: 43,  labelTop: 65, labelLeft: 50, labelSize: 15 },
+  { id: 'steamed',   jar: 'jar_2',     label: '蒸',   left: 611,  bottom: 220, width: 38,  labelTop: 60, labelLeft: 52, labelSize: 15 },
+  { id: 'wok',       jar: 'jar_1',     label: '炒',   left: 687,  bottom: 219, width: 30,  labelTop: 58, labelLeft: 49, labelSize: 15 },
+  { id: 'roasted',   jar: 'jar_3',     label: '烤',   left: 718,  bottom: 219, width: 38,  labelTop: 60, labelLeft: 50, labelSize: 15 },
+  { id: 'container', jar: 'container', label: '写食谱', left: 1005, bottom: 198, width: 130, labelTop: 68, labelLeft: 50, labelSize: 24 },
+];
+
+let sel  = null;
+let drag = null;
+let zoom = 1.25;
+
+const stage  = document.getElementById('stage');
+const sizer  = document.getElementById('sizer');
+
+function applyZoom(z) {
+  zoom = z;
+  stage.style.transform = `scale(${z})`;
+  sizer.style.width  = `${Math.round(CANVAS_W * z)}px`;
+  sizer.style.height = `${Math.round(CANVAS_H * z)}px`;
+}
+
+function canvasCoords(e) {
+  const r = stage.getBoundingClientRect();
+  return { x: (e.clientX - r.left) / zoom, y: (e.clientY - r.top) / zoom };
+}
+
+function render() {
+  document.querySelectorAll('.jar-el').forEach(e => e.remove());
+
+  JARS.forEach((jar, i) => {
+    const color = COLORS[i % COLORS.length];
+    const el = document.createElement('div');
+    el.className = 'jar-el' + (jar.id === sel ? ' sel' : '');
+    el.dataset.id = jar.id;
+    el.style.cssText = `left:${jar.left}px; bottom:${jar.bottom}px; width:${jar.width}px;`;
+
+    const img = document.createElement('img');
+    img.src = `../public/kitchen/${jar.jar}.png`;
+    img.onerror = () => { img.style.display = 'none'; el.style.minHeight = `${jar.width * 2}px`; };
+    el.appendChild(img);
+
+    const outline = document.createElement('div');
+    outline.className = 'outline';
+    outline.style.borderColor = color;
+    el.appendChild(outline);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'lbl';
+    lbl.textContent = jar.id;
+    lbl.style.color = color;
+    el.appendChild(lbl);
+
+    const jarLabel = document.createElement('div');
+    jarLabel.className = 'jar-label';
+    jarLabel.textContent = jar.label;
+    jarLabel.style.cssText = `position:absolute; top:${jar.labelTop}%; left:${jar.labelLeft}%; transform:translate(-50%,-50%); font-family:serif; font-size:${jar.labelSize}px; font-weight:700; color:#4a3a2a; text-align:center; white-space:nowrap; pointer-events:none; line-height:1.1; text-shadow:0 1px 2px rgba(255,255,255,0.6);`;
+    el.appendChild(jarLabel);
+
+    const rh = document.createElement('div');
+    rh.className = 'rh';
+    el.appendChild(rh);
+
+    el.addEventListener('pointerdown', (e) => {
+      if (e.target === rh) return;
+      e.preventDefault();
+      sel = jar.id;
+      const c = canvasCoords(e);
+      drag = { type: 'move', id: jar.id, startCX: c.x, startCY: c.y, orig: { left: jar.left, bottom: jar.bottom } };
+      el.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    rh.addEventListener('pointerdown', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      sel = jar.id;
+      const c = canvasCoords(e);
+      drag = { type: 'rw', id: jar.id, startCX: c.x, orig: { width: jar.width } };
+      rh.setPointerCapture(e.pointerId);
+      render();
+    });
+
+    stage.appendChild(el);
+  });
+
+  const list = document.getElementById('jar-list');
+  list.innerHTML = '';
+  JARS.forEach((jar, i) => {
+    const color = COLORS[i % COLORS.length];
+    const item = document.createElement('div');
+    item.className = 'jar-item' + (jar.id === sel ? ' sel' : '');
+    item.innerHTML = `<span style="color:${color}">${jar.id}</span><span class="coords">${jar.left}, ${jar.bottom}, w${jar.width}</span>`;
+    item.addEventListener('click', () => { sel = jar.id; render(); });
+    list.appendChild(item);
+  });
+
+  const d = document.getElementById('detail');
+  const jar = JARS.find(j => j.id === sel);
+  if (!jar) { d.textContent = '—'; return; }
+
+  d.innerHTML = `<div class="detail">
+    <div class="row"><span>left</span><span class="val">${jar.left}px</span></div>
+    <div class="row"><span>bottom</span><span class="val">${jar.bottom}px</span></div>
+    <div class="row"><span>width</span><span class="val">${jar.width}px</span></div>
+    <hr style="margin:0.4rem 0; border-color:#1e3a52"/>
+    <div class="slider-row"><span style="width:62px">labelTop</span>
+      <input type="range" min="0" max="100" value="${jar.labelTop}" data-f="labelTop"/>
+      <span class="sval">${jar.labelTop}</span></div>
+    <div class="slider-row"><span style="width:62px">labelLeft</span>
+      <input type="range" min="0" max="100" value="${jar.labelLeft}" data-f="labelLeft"/>
+      <span class="sval">${jar.labelLeft}</span></div>
+    <div class="slider-row"><span style="width:62px">labelSize</span>
+      <input type="range" min="8" max="40" value="${jar.labelSize}" data-f="labelSize"/>
+      <span class="sval">${jar.labelSize}</span></div>
+  </div>`;
+
+  d.querySelectorAll('input[type=range]').forEach(inp => {
+    inp.addEventListener('input', () => {
+      jar[inp.dataset.f] = +inp.value;
+      inp.nextElementSibling.textContent = inp.value;
+      const jarEl = stage.querySelector(`[data-id="${jar.id}"]`);
+      if (jarEl) {
+        const jl = jarEl.querySelector('.jar-label');
+        if (jl) {
+          if (inp.dataset.f === 'labelTop')  jl.style.top      = inp.value + '%';
+          if (inp.dataset.f === 'labelLeft') jl.style.left     = inp.value + '%';
+          if (inp.dataset.f === 'labelSize') jl.style.fontSize = inp.value + 'px';
+        }
+      }
+    });
+  });
+}
+
+window.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const jar = JARS.find(j => j.id === drag.id);
+  const c = canvasCoords(e);
+  if (drag.type === 'move') {
+    jar.left   = Math.round(Math.max(0, Math.min(CANVAS_W - jar.width, drag.orig.left   + c.x - drag.startCX)));
+    jar.bottom = Math.round(Math.max(0, Math.min(CANVAS_H,              drag.orig.bottom - (c.y - drag.startCY))));
+  } else if (drag.type === 'rw') {
+    jar.width = Math.round(Math.max(8, Math.min(600, drag.orig.width + c.x - drag.startCX)));
+  }
+  render();
+});
+
+window.addEventListener('pointerup', () => { drag = null; });
+
+document.getElementById('zoom').addEventListener('input', (e) => {
+  applyZoom(e.target.value * 1.25 / 70);
+  document.getElementById('zv').textContent = e.target.value + '%';
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  const main = JARS.filter(j => j.id !== 'container');
+  const cont = JARS.find(j => j.id === 'container');
+  const lines = main.map(j =>
+    `  { categoryId: '${j.id}', left: ${j.left}, bottom: ${j.bottom}, width: ${j.width}, labelTop: ${j.labelTop}, labelLeft: ${j.labelLeft}, labelSize: ${j.labelSize} },`
+  );
+  const text = `const CATEGORY_JARS = [\n${lines.join('\n')}\n];\n\n// Container (写食谱): left: ${cont.left}, bottom: ${cont.bottom}, width: ${cont.width}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!'; btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copy CATEGORY_JARS'; btn.classList.remove('ok'); }, 2000);
+  });
+});
+
+applyZoom(zoom);
+render();
+</script>
+</body>
+</html>
