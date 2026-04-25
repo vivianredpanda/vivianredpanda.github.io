@@ -1,0 +1,34 @@
+{
+  "id": 23,
+  "categoryId": "steamed",
+  "image": "/recipes/eggplant_salad.jpg",
+  "name": "凉拌茄子",
+  "description": "夏天必备的下饭菜",
+  "difficulty": "Easy",
+  "time": "25 min",
+  "tags": [
+    "Chinese",
+    "Salad"
+  ],
+  "makes": "1 serving",
+  "ingredients": [
+    {
+      "group": "",
+      "items": [
+        "1颗 茄子",
+        "1/4 勺 辣椒油 （蒜末，辣椒粉，辣椒， 麻油）",
+        "1 勺 酱油",
+        "1 勺醋",
+        "1/4 勺 糖",
+        ""
+      ]
+    }
+  ],
+  "steps": [
+    "茄子切成四段",
+    "水开了以后，茄子上锅蒸15分钟",
+    "调一下料汁：把辣椒油热一下，放入糖，酱油，醋， 拌匀",
+    "茄子蒸好了，撕成条，挤出水，放进料汁"
+  ],
+  "notes": []
+}
