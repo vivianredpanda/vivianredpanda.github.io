@@ -1,0 +1,40 @@
+{
+  "id": 27,
+  "categoryId": "roasted",
+  "image": "/recipes/chile_chipotle_chicken.jpg",
+  "name": "Chile Lime Chipotle Chicken",
+  "description": "Meal prep flavorful chicken",
+  "difficulty": "Easy",
+  "time": "4 hours",
+  "tags": [
+    "Meal Prep"
+  ],
+  "makes": "4 servings",
+  "ingredients": [
+    {
+      "group": "",
+      "items": [
+        "1 lb frozen chicken breast",
+        "1/2 onion",
+        "1 tsp paprika",
+        "1 tsp garlic powder",
+        "1 tsp chili flakes",
+        "1/8 tsp cayenne",
+        "1/4 tsp oregano",
+        "1 tsp olive oil",
+        "1 tbsp yogurt",
+        "lemon juice (from 2 frozen slices)",
+        "1 tsp honey"
+      ]
+    }
+  ],
+  "steps": [
+    "Slice the chicken into thin cutlets",
+    "Add in olive oil, salt, pepper, all of the above seasonings, yogurt, honey, and lemon juice",
+    "Slice up the onions and mix it in with the chicken",
+    "Marinate for 2-4 hours (or overnight)",
+    "Preheat the oven to 425 F, remove the chicken from the fridge to come to room temp (30 min), then pack tightly inside a small pan (20 in squared)",
+    "Bake the oven for 55 min, then cut the chicken into strips"
+  ],
+  "notes": []
+}

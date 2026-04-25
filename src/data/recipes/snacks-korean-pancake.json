@@ -1,0 +1,47 @@
+{
+  "id": 25,
+  "categoryId": "snacks",
+  "image": "/recipes/korean_pancake.jpg",
+  "name": "Korean Pancake",
+  "description": "Fun, crispy pancake that uses up veggies",
+  "difficulty": "Medium",
+  "time": "45 min",
+  "tags": [
+    "Korean"
+  ],
+  "makes": "2 pancakes",
+  "ingredients": [
+    {
+      "group": "Pancake",
+      "items": [
+        "160 g veggies (cabbage, carrots, 韭菜）",
+        "1 jalapeno (optional)",
+        "1 scallion",
+        "1 onion ",
+        "5 shrimp (21-25)",
+        "100g flour",
+        "150g water",
+        "1/4 tsp salt"
+      ]
+    },
+    {
+      "group": "Sauce",
+      "items": [
+        "1 勺 酱油",
+        "1 勺 醋",
+        "1/4 勺 糖",
+        "1/4 勺 辣椒油 （辣椒面）",
+        "2 勺 水"
+      ]
+    }
+  ],
+  "steps": [
+    "Chop all of the veggies, jalapeno, scallion, and onions in the thin strips.\nChop each shrimp into approx 4 pieces",
+    "Mix all of the chopped veggies and shrimp into a bowl with the flour, water, and salt until well combined",
+    "Heat oil in the pan, pour about half of the batter in and flatten the pancake",
+    "Fry over medium heat until crispy and brown, add a bit of water, approx 5 minutes",
+    "Flip, add a bit of water and fry for another 5 minutes",
+    "Cut into pieces and serve with sauce (mix all ingredients together)"
+  ],
+  "notes": []
+}

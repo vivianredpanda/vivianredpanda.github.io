@@ -1,0 +1,34 @@
+{
+  "id": 24,
+  "categoryId": "wok",
+  "image": "/recipes/peanut_noodles.jpg",
+  "name": "花生酱面",
+  "description": "超级超级无敌好吃的花生酱面做法",
+  "difficulty": "Easy",
+  "time": "20 min",
+  "tags": [
+    "Chinese",
+    "Fast"
+  ],
+  "makes": "1 serving",
+  "ingredients": [
+    {
+      "group": "",
+      "items": [
+        "面条",
+        "1/4 勺 辣椒油 （蒜末，葱，辣椒面，麻油）",
+        "1 勺 酱油",
+        "1/4 勺 糖",
+        "1/2 勺 醋",
+        "1 勺 花生酱",
+        "配菜 （黄瓜丝，豆苗，等）"
+      ]
+    }
+  ],
+  "steps": [
+    "开水里煮面 （5分钟）",
+    "挑一个辣椒油（用微波炉重热），加入糖，酱油，醋，花生酱",
+    "把花生酱拌匀，放入面条和配菜继续拌"
+  ],
+  "notes": []
+}
