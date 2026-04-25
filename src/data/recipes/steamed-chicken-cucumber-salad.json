@@ -1,0 +1,43 @@
+{
+  "id": 26,
+  "categoryId": "steamed",
+  "image": "/recipes/chicken_cucumber_salad.jpg",
+  "name": "Chicken Cucumber Salad",
+  "description": "Nutty delicious use of extra chicken",
+  "difficulty": "Easy",
+  "time": "20 min",
+  "tags": [
+    "Asian Fusion",
+    "Salad",
+    "Quick"
+  ],
+  "makes": "1 serving",
+  "ingredients": [
+    {
+      "group": "",
+      "items": [
+        "cooked chicken shredded",
+        "1 cucumber chopped",
+        "1 scallion chopped"
+      ]
+    },
+    {
+      "group": "Sauce",
+      "items": [
+        "1-2 勺 花生酱",
+        "1/2 勺 醋",
+        "柠檬汁 （1 片冰冻柠檬 ）",
+        "1/2 勺酱油",
+        "1/4 勺 麻油",
+        "1/4 勺 辣椒油",
+        "1/2 勺 蜂蜜"
+      ]
+    }
+  ],
+  "steps": [
+    "steam chicken over boiling water for 15-20 minutes (cut raw chicken into small pieces if needed)",
+    "Chop cucumber and scallions thinly, and shred chicken",
+    "Make the sauce, and mix  in the cucumber, chicken, and scallions and"
+  ],
+  "notes": []
+}
