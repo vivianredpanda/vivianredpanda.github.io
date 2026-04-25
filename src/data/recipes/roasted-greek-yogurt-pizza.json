@@ -1,0 +1,37 @@
+{
+  "id": 28,
+  "categoryId": "roasted",
+  "image": "/recipes/pizza.jpg",
+  "name": "Greek Yogurt Pizza",
+  "description": "Get some yogurt in a tasty manner",
+  "difficulty": "Easy",
+  "time": "1 hour",
+  "tags": [
+    "Protein"
+  ],
+  "makes": "1 serving",
+  "ingredients": [
+    {
+      "group": "",
+      "items": [
+        "62g bread flour",
+        "1/2 tsp baking powder",
+        "1/8 tsp salt",
+        "1/2 tsp oregano",
+        "113g greek yogurt",
+        "42g pizza sauce",
+        "42g cheese",
+        "veggies or meat"
+      ]
+    }
+  ],
+  "steps": [
+    "Preheat oven to 450F and line pan with parchment paper",
+    "Mix together flour, baking powder, salt, oregano and greek yogurt until dough forms",
+    "Knead the dough until fully combined, then roll out as thin as possible, rolling the edges for the crust. ",
+    "Lightly put a bit of pizza sauce and bake the crust for 12 minutes",
+    "Then add the remaining sauce, cover with cheese and toppings",
+    "Bake for 6-8 minutes, broil on high for 1 minute, then slice"
+  ],
+  "notes": []
+}
