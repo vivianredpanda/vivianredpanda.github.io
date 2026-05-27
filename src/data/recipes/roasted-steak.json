@@ -1,0 +1,35 @@
+{
+  "id": 29,
+  "categoryId": "roasted",
+  "image": "/recipes/steak.jpg",
+  "name": "Steak",
+  "description": "fancy dinner that needs to be prepped beforehand. best temperature is always medium-rare",
+  "difficulty": "Easy",
+  "time": "45 min",
+  "tags": [],
+  "makes": "1 serving",
+  "ingredients": [
+    {
+      "group": "",
+      "items": [
+        "steak (1-1.5 inch thick)",
+        "salt, pepper, herbs",
+        "optional veggies (potatoes, onions, oyster mushroom)"
+      ]
+    }
+  ],
+  "steps": [
+    "Fully defrost the steak in the fridge",
+    "Let the steak come to room temperature for 30 min",
+    "Heat the oven to 400 degrees Fahrenheit",
+    "Dry the steak, add oil and spices on both sides. Remember to add extra black pepper",
+    "Heat a dry frying pan until hot, add in cold oil.",
+    "Sear the steak on each side for 1 minute",
+    "Put the steak into the oven for 6.5 min ",
+    "Take the steak off the pan and let the steak rest for 5 min before cutting",
+    "With the remaining oils, stir-fry onions with other vegetables or pan fry thick oyster mushrooms on low heat"
+  ],
+  "notes": [
+    "Technically supposed to bake steak for 6 min, but often ends up a bit rare if steak is thicker than 1 inch"
+  ]
+}
