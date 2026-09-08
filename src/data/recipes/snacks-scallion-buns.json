@@ -1,0 +1,52 @@
+{
+  "id": 30,
+  "categoryId": "snacks",
+  "image": "/recipes/scallion_bun.jpg",
+  "name": "Scallion Buns",
+  "description": "loads of scallions on a soft milk bread bun with a bit of cheese",
+  "difficulty": "Hard",
+  "time": "5 hours",
+  "tags": [],
+  "makes": "18 servings",
+  "ingredients": [
+    {
+      "group": "Bread Ingredients",
+      "items": [
+        "310g bread flour",
+        "1 tsp yeast",
+        "160g water",
+        "1 egg",
+        "25g sugar",
+        "1/2 tsp salt",
+        "15g olive oil (optional: scallion infused)"
+      ]
+    },
+    {
+      "group": "For the filling",
+      "items": [
+        "cheese (preferrably cheddar)",
+        "5 scallion stalks",
+        "optional: 肉松, chili oil "
+      ]
+    }
+  ],
+  "steps": [
+    "Beat the egg and leave around 5g for egg wash at the end\n",
+    "Mix cold water, egg, yeast, salt, and sugar together well to ensure yeast and sugar are well combined",
+    "Add flour and mix until combined. Add oil and mix until combined.",
+    "Rest in fridge for 40 min, the dough should be elastic enough for a thick windowpane. ",
+    "Do a couple of stretch and folds towards the center until the dough is smooth and tight",
+    "Let proof for 1 hour (until poke test result is no bounce back)",
+    "Make the scallion filling: oil, salt, and chopped scallions emacerated",
+    "Roll out the dough into 18 balls. (may need to add flour around the outside)",
+    "Rest in fridge for 20 minutes before creating the bread shape (either 3 balls for each braid, or a simple roll)",
+    "For braid: add eggwash, then the filling and a sprinkle of cheese right on top of the braid",
+    "For roll: add the filling in a sprinkle of cheese while rolling. Add eggwash and any leftover cheese and filling on top before baking",
+    "Proof the second time for 30 min (should pass the poke test and slowly bounce back)",
+    "Bake at 365°F for 19 min"
+  ],
+  "notes": [
+    "Dough is super sticky, but try not to add flour directly into the dough, use water/flour on a rolling pin and add flour to the outside",
+    "Even if the second proof does not pass poke test, it could still bake well as long as cold water was used"
+  ]
+}
