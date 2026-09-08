@@ -1,0 +1,31 @@
+{
+  "id": 31,
+  "categoryId": "roasted",
+  "image": "/recipes/default.jpg",
+  "name": "Crispy Potatoes",
+  "description": "Crispy herby potatoes",
+  "difficulty": "Medium",
+  "time": "1 hour",
+  "tags": [],
+  "makes": "1 serving",
+  "ingredients": [
+    {
+      "group": "",
+      "items": [
+        "1/2 lb potatoes (preferrably golden)",
+        "1 tsp olive oil",
+        "1/8 tsp baking soda",
+        "herbs (garlic, rosemary, scallion, etc)"
+      ]
+    }
+  ],
+  "steps": [
+    "Preheat oven to 400°F",
+    "Cut potatoes into uniform chunks (around 1 inch)",
+    "Boil potatoes with baking soda for 10 min, then drain of water and rough up the potatoes",
+    "Season potatoes with salt, add oil (optional heat in oven), black pepper, and any dry seasonings",
+    "Roast for 1 hour, mixing every 20 minutes (preferably on top of parchment paper)",
+    "Combine an emacerated garlic herb oil mix, and mix the ready potatoes directly in oil"
+  ],
+  "notes": []
+}
